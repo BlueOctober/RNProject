@@ -179,7 +179,6 @@ android {
 }
 
 dependencies {
-    implementation project(':react-native-vector-icons')
     //JH : 신규 추가.ㅎㅎ
     implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha02'

@@ -1,127 +1,89 @@
 import React from 'react';
-import {View, Text, StyleSheet, TextInput, SafeAreaView} from 'react-native';
+import { View, Text, StyleSheet, TextInput, SafeAreaView } from 'react-native';
 
-const style = StyleSheet.create({
-    profileImg: {
-        width: 50,
-        height:50,
-        borderRadius:25,
-        backgroundColor:'gray'
-    }
+const styles = StyleSheet.create({
+	textInput: { height: 100, borderColor: 'gray', borderWidth: 1, paddingLeft: 10, paddingTop: 5 }
 });
 
-const UserMsg = ({item}) => {
-    return (
-            <View style={{width:'100%', flexDirection:'row', padding: 10}}>
-                <View style={style.profileImg} />
-                {/* <View style={[style.profileImg, {backgroundColor: item.msg=='안녕하세요2'?'red':'blue'}]} /> */}
-                
-                <View style={{paddingHorizontal: 10}}>
-                    <Text>{item.userName}</Text>
-
-                    <View style={{flexDirection:'row', marginTop:10}}>
-                        <View style={{backgroundColor:'white', padding: 10, marginTop: 5, borderRadius: 5}}>
-                            <Text>{item.msg}</Text>
-                        </View>
-                        <View style={{justifyContent:'flex-end', marginLeft: 5}}>
-                            <Text stlye={{fontSize:11}}>{item.timeDate}</Text>
-                        </View>
-                    </View>
-                    
-                </View>
-                
-            </View>
-    );
-};
-
-// lfex
-// flexDirection row
-// justifyContent flex-start | center | flex-end
-// alignItems flex-start | center | flex-end
-
-const ManagerMsg = ({timeDate, msg}) => {
-    return (
-            <View style={{width:'100%', flexDirection:'row', justifyContent:'flex-end', padding: 10}}>                            
-                
-                <View style={{justifyContent:'flex-end', marginRight: 5}}>
-                    <Text stlye={{fontSize:11}}>{timeDate}</Text>
-                </View>
-
-                <View style={{padding: 10, backgroundColor:'rgb(253,226, 11)', borderRadius: 5}}>
-                    <Text>{msg}</Text>
-                </View>
-                
-            </View>
-    );
-};
-
-
 const testData = [
-    {
-        userName: '관리자',
-        userType: 'm',
-        timeDate: '오후 2:34',
-        msg: '안녕하세요1',
-    },
-    {
-        userName: '김진호',
-        userType: 'u',
-        timeDate: '오후 2:35',
-        msg: '안녕하세요2',
-    },
-    {
-        userName: '관리자',
-        userType: 'm',
-        timeDate: '오후 2:36',
-        msg: '안녕하세요3',
-    },
-]
+	{
+		userName: '관리자',
+		userType: 'm',
+		timeDate: '오후 2:34',
+		msg: '안녕하세요11'
+	},
+	{
+		userName: '김진호',
+		userType: 'u',
+		timeDate: '오후 2:35',
+		msg: '안녕하세요22'
+	},
+	{
+		userName: '관리자',
+		userType: 'm',
+		timeDate: '오후 2:36',
+		msg: '안녕하세요33'
+	}
+];
 
-interface Props {};
+interface Props {}
 
-const Home = ({}:Props) => {
-    const [value, onChangeText] = React.useState('');
+const Home = (props: Props) => {
+	const [value, onChangeText] = React.useState('');
 
-    const [msgList, setMsgList] = React.useState(testData);
+	const [msgList, setMsgList] = React.useState(testData);
 
-    const addMsg = () => {
-        //value;
+	const addMsg = () => {
+		//value;
 
-        let msg = {
-            userName: '김진호',
-            userType: 'u',
-            timeDate: '오후 2:34',
-            msg: value
-        }
+		let msg = {
+			userName: '김진호',
+			userType: 'u',
+			timeDate: '오후 2:34',
+			msg: value
+		};
 
-        // setMsgList(msg)
-    }
+		setMsgList([...msgList, msg]);
+	};
 
-    return (
-        <View style={{flex:1}}>
-            {
-                msgList.map(item => {
-                    if(item.userType==='u') {
-                        return <UserMsg item={item} />
-                    } else {
-                        return <ManagerMsg timeDate={item.timeDate} msg={item.msg} />
-                    }
-                    
-                })
-            }
-            
-            <SafeAreaView style={{position:'absolute', bottom:0, width:'100%'}}>
-                <TextInput
-                    style={{ height: 100, borderColor: 'gray', borderWidth: 1, paddingLeft: 10, paddingTop: 5 }}
-                    onChangeText={text => onChangeText(text)}
-                    onEndEditing = {addMsg}
-                    value={value}
-                    placeholder="placeholder"
-                />
-            </SafeAreaView>
+	return (
+		<View style={{ flex: 1 }}>
+			<SafeAreaView style={{ position: 'absolute', bottom: 0, width: '100%' }}>
+				<TextInput
+					style={styles.textInput}
+					onChangeText={text => onChangeText(text)}
+					onEndEditing={addMsg}
+					value={value}
+					placeholder="placeholder"
+				/>
 
-        </View>
-    )
+				<View
+					style={{
+						position: 'absolute',
+						right: 0,
+						width: 100,
+						height: '100%',
+						justifyContent: 'center',
+						alignItems: 'center',
+						padding: 10
+					}}
+				>
+					<View
+						style={{
+							width: '100%',
+							height: '100%',
+							justifyContent: 'center',
+							alignItems: 'center',
+							borderRadius: 5,
+							backgroundColor: value.length <= 0 ? 'gray' : 'rgb(253,226,11)'
+						}}
+					>
+						<Text>전송</Text>
+					</View>
+				</View>
+			</SafeAreaView>
+		</View>
+	);
 };
 
 export default Home;
